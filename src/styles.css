@@ -307,3 +307,7 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 @media(max-width:720px){.coverDecisionTools{grid-template-columns:1fr}.shiftTabs.four{grid-template-columns:repeat(2,1fr)}}
 
 .matrixSource{padding:11px 12px 8px}.matrixSource b,.matrixSource span{display:block}.matrixSource b{font-size:11px;color:#fff}.matrixSource span{font-size:9px;color:#999;margin-top:3px}.coverSuggestions,.coverMatrix{margin-bottom:14px}.coverMatrixBlock{display:block!important}
+
+/* Manager cover desk — surface next action before opening a cover */
+.managerCoverIntro{margin:18px 0 14px;background:#080808;color:#fff;border-radius:18px;padding:20px;display:flex;justify-content:space-between;gap:20px;align-items:end}.managerCoverIntro h2{font-size:24px;margin:5px 0}.managerCoverIntro p{font-size:10px;line-height:1.45;color:#999;margin:0;max-width:500px}.coverDeskStats{display:flex;gap:7px}.coverDeskStats span{background:#191919;border-radius:10px;padding:9px 11px;color:#999;font-size:9px;white-space:nowrap}.coverDeskStats b{color:#fff;font-size:14px;margin-right:3px}.managerShell .shiftCard .shiftFoot strong{display:flex;align-items:center;gap:5px;color:#d71920;font-size:9px;letter-spacing:.3px}.managerShell .shiftCard .shiftFoot>span{color:#666}
+@media(max-width:720px){.managerCoverIntro{align-items:flex-start;flex-direction:column}.coverDeskStats{width:100%}.coverDeskStats span{flex:1}}
