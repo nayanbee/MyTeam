@@ -504,14 +504,13 @@ Stores explainable checks:
 Generated after a cover is approved and tied to the **preceding equivalent occurrence of the covered RecurringSlot**, not simply the instructor's previous chronological class.
 
 Default reminder policy:
-- T-75 minutes before the instructor teaches that equivalent class one week prior
-- T-15 minutes before the same class
+- T-15 minutes before the instructor teaches that equivalent class one week prior
 - deliver as in-app notification and mobile push where enabled
 - identify the approved covering instructor and covered future session
 - suppress/cancel reminders if the cover is cancelled, reassigned or the relevant session is cancelled
 - organisation-configurable in future
 
-This gives the instructor an early prompt before arriving/setting up and a second just-before-class prompt to tell regular clients who will teach the following week.
+This gives the instructor a just-before-class prompt to tell regular clients who will teach the following week.
 
 ### CoverDecision
 Manager approval/rejection and audit trail.
