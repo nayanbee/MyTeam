@@ -343,3 +343,13 @@ div.shiftCard{cursor:pointer}div.shiftCard:focus-visible{outline:2px solid #d719
 @media(max-width:620px){.availabilityDays{grid-template-columns:repeat(4,1fr)}.availabilitySummary>div{grid-template-columns:35px 1fr}.availabilitySummary small{grid-column:2;text-align:left}.availabilityDayHead span{max-width:220px}}
 
 .matrixRank{display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:8px;font-weight:900;background:#080808;color:#fff;border-radius:5px;padding:4px 5px;margin-right:7px;vertical-align:2px}.matrixCandidate:first-child{border-color:#d71920!important}.matrixCandidate:first-child .fitEvidence b{color:#d71920!important}
+
+/* Mobile cover workflow polish */
+@media(max-width:760px){
+.matrixCandidateMain,.matrixCandidate:not(.alreadyApplied) .matrixCandidateMain{grid-template-columns:24px minmax(0,1fr) 78px!important;column-gap:8px!important;overflow:hidden!important}
+.matrixCandidateMain>.fitEvidence{grid-column:3!important;min-width:0!important;width:78px!important;text-align:right!important;padding-right:2px!important;box-sizing:border-box!important}
+.matrixCandidateMain>.fitEvidence b{font-size:18px!important;line-height:1!important;display:block!important;white-space:nowrap!important}
+.matrixCandidateMain>.fitEvidence span{font-size:7px!important;white-space:nowrap!important;display:block!important;margin-top:3px!important}
+.matrixCandidateMain>.fitPerson{min-width:0!important}.matrixCandidateMain>.fitPerson b{display:flex!important;align-items:center!important;gap:5px!important;flex-wrap:wrap!important}
+.pendingRequestList{display:grid!important;gap:8px!important}.pendingRequestCard{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;padding:14px!important;border:1px solid #dedbd6!important;border-radius:14px!important;background:#fff!important}.pendingRequestCard>div{display:grid!important;gap:4px!important;min-width:0!important}.pendingRequestCard b{font-size:15px!important}.pendingRequestCard span:not(.pill){font-size:10px!important;color:#777!important}.pendingRequestCard .pill{white-space:nowrap!important}
+}
