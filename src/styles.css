@@ -162,3 +162,8 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 .loginPage .eyebrow{color:#777}
 .loginPage h1{font-size:50px;line-height:.94}
 @media(max-width:360px){header h1{font-size:37px}.loginPage h1{font-size:43px}.hero h2{font-size:36px}}
+
+/* Cover workflow additions */
+.field select{width:100%;margin-top:8px;padding:14px 13px;border:1px solid #d8d5cf;border-radius:4px;background:#fff;color:#111;font:inherit;font-size:14px}
+.coverReminder{display:flex;gap:12px;align-items:flex-start;background:#111;color:#fff;padding:16px;margin:18px 0;border-left:4px solid #d71920;border-radius:5px}
+.coverReminder svg{color:#d71920;flex:none;margin-top:2px}.coverReminder div{display:flex;flex-direction:column;gap:4px}.coverReminder b{font-size:12px}.coverReminder span{font-size:10px;line-height:1.45;color:#bbb}
