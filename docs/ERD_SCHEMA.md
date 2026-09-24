@@ -443,6 +443,8 @@ Needed because an instructor may apply for an exact subset of a bundle.
 - `decided_at timestamptz`
 - `source_schedule_updated boolean DEFAULT false`
 - `source_schedule_updated_at timestamptz NULL`
+- `source_sync_status text DEFAULT 'manual_pending'` — manual_pending/write_pending/syncing/synced/failed/conflict
+- `outbound_sync_command_id uuid NULL FK`
 
 ## 8. Feedback
 
@@ -557,6 +559,43 @@ Secrets themselves must live outside the normal database/repository.
 - `records_written integer`
 - `records_failed integer`
 - `error_summary jsonb NULL`
+
+### outbound_sync_commands
+Durable write-back queue for V2 provider mutations. V1 may create commands in disabled/manual mode without sending them.
+- `id uuid PK`
+- `organisation_id uuid FK`
+- `integration_connection_id uuid FK`
+- `command_type text` — e.g. update_class_instructor
+- `myteam_entity_type text`
+- `myteam_entity_id uuid`
+- `external_entity_type text`
+- `external_entity_id text`
+- `desired_state jsonb`
+- `expected_source_state jsonb NULL` — optimistic concurrency / do-not-clobber guard
+- `idempotency_key text UNIQUE`
+- `status text` — disabled/pending/sending/succeeded/failed/conflict/cancelled
+- `attempt_count integer DEFAULT 0`
+- `last_attempt_at timestamptz NULL`
+- `provider_response jsonb NULL`
+- `error_code text NULL`
+- `error_detail text NULL`
+- `created_by_membership_id uuid FK`
+- timestamps
+
+### reconciliation_results
+Records whether MyTeam's approved state agrees with the provider after a write or later inbound sync.
+- `id uuid PK`
+- `integration_connection_id uuid FK`
+- `myteam_entity_type text`
+- `myteam_entity_id uuid`
+- `external_entity_id text`
+- `expected_state jsonb`
+- `observed_state jsonb`
+- `status text` — matched/pending/conflict/provider_changed/failed
+- `outbound_sync_command_id uuid NULL FK`
+- `checked_at timestamptz`
+- `resolved_at timestamptz NULL`
+- `resolution text NULL`
 
 ### sync_cursors
 - `integration_connection_id uuid FK`
