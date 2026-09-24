@@ -173,3 +173,24 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 .notificationHead{display:flex;align-items:center;justify-content:space-between;margin:0 2px 9px}.notificationHead>div{display:flex;align-items:center;gap:8px}.notificationHead span{font-size:8px;letter-spacing:1.2px;font-weight:800;color:#777}.notificationHead b{font-size:8px;background:#d71920;color:#fff;border-radius:999px;padding:4px 7px}.notificationHead button{border:0;background:none;font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:#777}
 .notificationStack{display:flex;flex-direction:column;gap:7px}.teamNotification{width:100%;display:flex;gap:11px;align-items:flex-start;text-align:left;border:1px solid #dedbd6;background:#ffffffd9;border-radius:15px;padding:12px;position:relative}.teamNotification.unread{background:#fff}.notificationAppIcon{width:34px;height:34px;border-radius:9px;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}.teamNotification:nth-child(2) .notificationAppIcon{background:#d71920}.notificationCopy{min-width:0;flex:1}.notificationCopy>div{display:flex;justify-content:space-between;gap:8px;align-items:center}.notificationCopy>div b{font-size:10px}.notificationCopy>div span{font-size:9px;color:#999}.notificationCopy strong{display:block;font-size:11px;margin-top:3px}.notificationCopy p{font-size:9px;line-height:1.4;color:#666;margin:2px 14px 0 0}.teamNotification>i{width:6px;height:6px;border-radius:50%;background:#d71920;position:absolute;right:10px;bottom:10px}
 .notificationTray+.hero{margin-top:8px}
+
+/* Notification hotfix — compact iOS-inspired cards */
+.notificationTray{padding:18px 18px 10px;background:#f5f4f1}
+.notificationHead{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:0 2px 10px!important}
+.notificationHead>div{display:flex!important;align-items:center!important;gap:7px!important}
+.notificationHead span{font-size:9px!important;line-height:1!important;letter-spacing:1.2px!important;font-weight:800!important;color:#777!important}
+.notificationHead b{font-size:8px!important;line-height:1!important;background:#d71920!important;color:#fff!important;border-radius:999px!important;padding:5px 7px!important}
+.notificationHead button{appearance:none!important;border:0!important;background:transparent!important;padding:6px 0!important;font:inherit!important;font-size:8px!important;line-height:1!important;text-transform:uppercase!important;letter-spacing:.65px!important;color:#777!important;width:auto!important}
+.notificationStack{display:flex!important;flex-direction:column!important;gap:7px!important}
+.teamNotification{appearance:none!important;box-sizing:border-box!important;width:100%!important;min-height:0!important;display:grid!important;grid-template-columns:36px minmax(0,1fr) 7px!important;gap:11px!important;align-items:start!important;text-align:left!important;border:1px solid #dedbd6!important;background:#ffffffd9!important;border-radius:14px!important;padding:11px 12px!important;margin:0!important;color:#111!important;font:inherit!important}
+.teamNotification.unread{background:#fff!important}
+.notificationAppIcon{width:36px!important;height:36px!important;border-radius:9px!important;background:#111!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.teamNotification:nth-child(2) .notificationAppIcon{background:#d71920!important}
+.notificationCopy{min-width:0!important;display:block!important}
+.notificationCopy>div{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin:0!important}
+.notificationCopy>div b{font-size:9px!important;line-height:1.2!important;font-weight:750!important}
+.notificationCopy>div span{font-size:8px!important;line-height:1.2!important;color:#999!important;font-weight:500!important}
+.notificationCopy strong{display:block!important;font-size:11px!important;line-height:1.25!important;font-weight:750!important;margin:3px 0 0!important}
+.notificationCopy p{display:block!important;font-size:9px!important;line-height:1.35!important;font-weight:450!important;color:#686868!important;margin:2px 0 0!important}
+.teamNotification>i{position:static!important;width:6px!important;height:6px!important;border-radius:50%!important;background:#d71920!important;margin-top:4px!important}
+.notificationTray+.hero{margin-top:8px!important}
