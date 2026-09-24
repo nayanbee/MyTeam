@@ -194,3 +194,20 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 .notificationCopy p{display:block!important;font-size:9px!important;line-height:1.35!important;font-weight:450!important;color:#686868!important;margin:2px 0 0!important}
 .teamNotification>i{position:static!important;width:6px!important;height:6px!important;border-radius:50%!important;background:#d71920!important;margin-top:4px!important}
 .notificationTray+.hero{margin-top:8px!important}
+
+/* Persistent inbox */
+.inboxList{display:grid;gap:10px;padding:14px 18px 110px}
+.inboxMessage{position:relative;display:flex;gap:12px;width:100%;padding:16px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;text-align:left}
+.inboxMessage.unread{border-color:rgba(215,25,32,.22);background:#fffafa}
+.inboxMessage>i{position:absolute;right:12px;top:14px;width:7px;height:7px;border-radius:50%;background:#d71920}
+.inboxIcon{width:38px;height:38px;min-width:38px;border-radius:12px;background:#080808;color:#fff;display:grid;place-items:center}
+.inboxCopy{min-width:0;flex:1}
+.inboxCopy>div:first-child{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.inboxCopy>div:first-child b{font-size:12px}
+.inboxCopy>div:first-child span{font-size:11px;color:#777}
+.inboxCopy h3{margin:5px 0 4px;font-size:16px;line-height:1.15}
+.inboxCopy p{margin:0;color:#666;font-size:13px;line-height:1.35}
+.inboxMeta{display:flex;align-items:center;gap:8px;margin-top:12px}
+.inboxMeta>span{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#777}
+.inboxMeta button{margin-left:auto;border:0;border-radius:999px;background:#080808;color:#fff;padding:7px 10px;font-size:11px;font-weight:800}
+.inboxMeta em{margin-left:auto;display:flex;align-items:center;gap:4px;font-size:11px;font-style:normal;font-weight:800;color:#555}
