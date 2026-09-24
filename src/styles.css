@@ -285,3 +285,10 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 .insightStack>div{background:#0b0b0b!important;color:#fff!important;border:0!important}.insightStack span{color:#999!important}.demandSummary>div{border-radius:18px!important}.demandSummary>div:last-child{background:#d71920!important}.demandSummary>div:last-child span,.demandSummary>div:last-child em{color:#fff!important}
 
 @media(max-width:520px){.demand{margin-left:14px;margin-right:14px}.demand>div{padding:20px 16px!important}.demand b{font-size:34px!important}.demandFacts,.chart,.historyGrid,.velocityCard{margin-left:14px!important;margin-right:14px!important}}
+
+/* Class detail rhythm — tighten vertical spacing after Performance refresh */
+.detailHead{margin-bottom:16px}.detailHead h1{margin-top:7px!important;margin-bottom:4px!important}.detailHead p{margin-bottom:0!important}.detailHead+.coverButton{margin-top:12px!important;margin-bottom:18px!important}
+.coverButton+.demand{margin-top:0!important}.demand{margin-top:18px!important;margin-bottom:12px!important}.demand+.alert{margin-top:0!important;margin-bottom:0!important}.alert+.demandFacts{margin-top:0!important}
+.demandFacts{margin-top:0!important;margin-bottom:24px!important}.sectionhead:has(+ .chart){margin-top:28px!important;margin-bottom:12px!important}.chart{margin-bottom:28px!important}.chart+.sectionhead{margin-top:0!important}
+.historyGrid{margin-bottom:8px!important}.velocityCard{margin-top:8px!important;margin-bottom:28px!important}
+@media(max-width:520px){.detailHead{margin-bottom:14px}.detailHead+.coverButton{margin-bottom:16px!important}.demandFacts{margin-bottom:22px!important}.sectionhead:has(+ .chart){margin-top:24px!important}.chart{margin-bottom:24px!important}}
