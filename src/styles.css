@@ -51,3 +51,43 @@ h1{font-size:39px;letter-spacing:-1.9px}
 .loginPage input{background:#111;border-color:#333;color:#fff}.loginPage input:focus{border-color:var(--lime)}
 .loginPage .primary{background:#fff;color:#050505}
 .loginPage>p,.loginPage label,.demoLogin p{color:#888}
+
+/* MyTeam Luxury Editorial v2 — monochrome, fashion-led */
+:root{--lime:transparent;--paper:#f3f1ed;--ink:#090909;--card:#faf9f6;--line:#d9d6d0}
+body{background:#dedbd5;color:#090909}
+.shell{background:#f3f1ed;box-shadow:0 20px 80px #00000020}
+header{background:#080808;color:#f8f7f3;padding-top:42px;padding-bottom:38px}
+header h1{font-weight:650;letter-spacing:-2.1px}
+.eyebrow{letter-spacing:1.8px;font-weight:650;color:#8d8b87}
+.icon i{background:#fff}
+.hero{background:#faf9f6;border-color:#dedbd5;box-shadow:0 12px 34px #00000012;border-radius:20px}
+.hero .ring{border:1px solid #111;background:#111;color:#fff}.hero .ring span{color:#aaa}
+.sectionhead h2{font-weight:620;letter-spacing:-.9px}
+.session,.shiftCard,.trackingCard,.metrics div,.managerStats>div,.studioGrid div,.profileCard,.workspaceSwitchButton,.roster,.compliance,.chart,.demand div,.selectTimes button,.applicants>button{background:#faf9f6;border-color:#dcd9d3;box-shadow:none}
+.session,.shiftCard,.trackingCard{border-radius:15px}
+.pill{font-weight:750;letter-spacing:.45px}
+.pill.good{background:#e7e6e1;color:#343431}.pill.strong{background:#111;color:#fff}.pill.warn{background:#e8dfd3;color:#6e421d}.pill.muted{background:#e7e5e0;color:#777}
+.metrics{gap:1px;background:#d9d6d0;border:1px solid #d9d6d0;border-radius:17px;overflow:hidden}.metrics div{border:0;border-radius:0}
+.metrics b,.managerStats b{font-weight:520;letter-spacing:-1.5px}
+.primary{background:#090909;color:#fff;border-radius:4px;text-transform:uppercase;letter-spacing:1px;font-size:10px}
+.heroBottom button,.sectionhead button{text-transform:uppercase;letter-spacing:.6px;font-size:8px}
+.shiftTabs .active{border-bottom-color:#111}
+.times span,.coverage span{background:#ebe9e4;border-color:#d8d5cf;border-radius:3px}
+.bundle,.bundleMode{color:#555}
+.successIcon{background:#111;color:#fff}
+.managerAction{border-radius:5px;background:#0a0a0a}
+.studioGrid div{border-radius:5px}
+.managerNav,nav{background:#f8f7f4}
+.managerNav button.active,nav button.active{color:#050505}
+.profileAvatar{background:#111}
+.loginPage{background:#080808;color:#f8f7f3}
+.brandMark{font-size:31px;font-weight:650;letter-spacing:-2px;margin-bottom:88px}
+.brandMark:after{content:" / TEAM";color:#8e8d89;font-weight:300}
+.loginPage h1{font-size:46px;font-weight:550;letter-spacing:-2.5px}
+.loginPage input{border-radius:3px;background:#111;border-color:#333;padding:17px}
+.loginPage input:focus{border-color:#eee}
+.loginPage .primary{background:#f7f6f2;color:#080808}
+.alert button{border-radius:3px}
+.coverButton,.notice,.managerHint,.sourceStep{border-radius:5px}
+.chart{border-radius:5px}
+@media(min-width:521px){.shell{border-radius:18px}nav,.managerNav{border-radius:0 0 18px 18px}}
