@@ -177,6 +177,51 @@ The implementation must define precedence when a client satisfies multiple categ
 
 This enables analysis of customer loss versus migration/cannibalisation.
 
+### 6.4 Business retention vs instructor retention
+
+The same client journey must support different role-specific interpretations without changing the underlying facts.
+
+**Business lens:** a client who stops attending an index class but continues checking in elsewhere within the organisation is internally migrated and remains business-retained. The material organisation-level risk is a client with no subsequent checked-in attendance within the selected horizon.
+
+**Instructor lens:** movement away from the instructor or their recurring class remains relevant even when the organisation retains the client, because the instructor is building a regular client base and attendance may affect compensation/commission.
+
+**Management lens:** show both. Management must be able to distinguish true organisation-level inactivity from redistribution caused or associated with changes in instructor, time, studio, format, capacity or adjacent timetable supply.
+
+Do not describe a client as definitively "lost" merely because they stopped attending a class or instructor. Use explicit states such as migrated internally, missing from usual class, inactive within 30 days, or reactivated.
+
+### 6.5 Regularity, lapse and return signals
+
+MyTeam should derive a client regularity profile at the recurring-slot/schedule-lineage level and, where relevant, instructor level. Regularity should consider frequency, recency, observation window and available history rather than a single missed class.
+
+Instructor-facing relationship signals may include:
+- becoming a regular
+- attendance weakening
+- missing from usual recurring class
+- moved between the same instructor's classes
+- returning regular / back today
+
+If a previously missing or inactive regular later books/checks into the instructor again, MyTeam may notify the instructor and mark the client in the roster as a returning regular so the instructor can deliberately reconnect.
+
+Instructor messaging should not expose competitive migration unnecessarily (for example, "you lost this client to Instructor X"). Management may access destination-level migration where permitted.
+
+### 6.6 Management client movement intelligence
+
+Management migration analysis should aggregate individual journeys to identify broad behavioural patterns while preserving the distinction between internal migration and organisation-level inactivity.
+
+Required analysis includes:
+- destination distribution after leaving a recurring slot
+- same instructor vs different instructor movement
+- same studio vs cross-studio movement
+- business-level inactivity at 7/30/60 days
+- reactivation after inactivity
+- movement before/after schedule-lineage changes
+- migration/cannibalisation around new or adjacent classes
+- changes in attendance frequency that may precede inactivity
+
+Schedule changes (time, instructor, format, capacity and related changes) should be linked to migration analysis. MyTeam may report observed associations but must not claim that a schedule change caused migration without appropriate causal evidence.
+
+The management objective is to answer: **Did clients leave the class, move elsewhere within the business, or stop attending the business altogether?**
+
 ## 7. Client feedback
 
 Post-class feedback model:
