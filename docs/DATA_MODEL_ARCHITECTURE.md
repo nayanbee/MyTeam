@@ -408,12 +408,66 @@ Supports:
 Default horizons: 7 / 30 / 60 days.
 
 ### ClientJourneyEvent / MigrationOutcome
+Client movement is a first-class intelligence domain, not a separate retention feature. The same canonical journey data powers management migration analysis and instructor relationship signals.
+
 Supports next-destination and broader migration analysis:
-- same recurring class
-- same instructor elsewhere
-- same studio elsewhere
-- another studio
-- no return in horizon
+- same recurring class / schedule lineage
+- same instructor in another recurring class or studio
+- same timeslot/lineage with a different instructor
+- another class at the same studio
+- another studio within the organisation
+- no checked-in business return within the selected horizon
+- reactivation after a period of inactivity
+
+Movement must be evaluated against RecurringSlot / ScheduleLineage so timetable edits (for example 17:30 -> 17:40) are not falsely classified as client loss.
+
+Business and instructor lenses intentionally differ:
+- **Business:** internal migration is retained business; no business return is the material retention risk.
+- **Instructor:** movement away from the instructor or their recurring slot remains relevant because attendance may affect instructor compensation/commission.
+- **Management:** can analyse both lenses and distinguish timetable redistribution/cannibalisation from genuine organisation-level inactivity.
+
+### ClientRegularityProfile
+Derived organisation-scoped client-to-slot/instructor relationship used for actionable relationship intelligence.
+
+Stores/derives:
+- customer_id
+- recurring_slot_id / schedule lineage
+- instructor_profile_id where relevant
+- observation window
+- attendance frequency and recency
+- expected attendance cadence
+- regularity state
+- last checked-in attendance
+- confidence/sample size
+
+Regularity states may include emerging regular, regular, attendance weakening, missing from usual slot, migrated internally, inactive at business level and reactivated. Thresholds must be configurable/data-driven and should not label a client permanently "lost."
+
+### ClientSignal
+Operational signal generated from regularity + migration outcomes.
+
+Examples:
+- regular missing from their usual recurring slot
+- regular moved to another class with the same instructor
+- former regular booked/checked in again ("back today")
+- business-level inactivity risk
+- reactivation
+
+Instructor-facing signals should be relationship-oriented and actionable, not competitive. Do not tell an instructor they "lost Sarah to George." Management retains the underlying destination analysis.
+
+### ClientBehaviourPattern
+Aggregate/materialised analysis across journeys for management.
+
+Supports questions such as:
+- are clients migrating internally or leaving the organisation?
+- where do displaced clients go after a schedule/instructor change?
+- did a new adjacent class create demand or cannibalise another slot?
+- are attendance-frequency declines preceding business inactivity?
+- which schedule changes are associated with migration or reactivation?
+
+Store observed associations and relevant change/context references. Do not represent correlation as causal evidence.
+
+### CommissionPolicy / CommissionImpact (optional future organisation layer)
+Compensation is not part of canonical retention definitions. An organisation may optionally configure commission/compensation rules so instructor-level attendance and migration can be translated into estimated compensation impact without changing the underlying journey facts.
 
 ## 9. Covers and open shifts
 
