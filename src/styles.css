@@ -127,3 +127,38 @@ header{background:#080808;color:#fff}
 .brandMark:after{content:" / TEAM";color:#d71920}
 .loginPage input:focus{border-color:#d71920}
 .loginPage .primary{background:#d71920;color:#fff}
+
+/* Presentation polish v4 — fashion editorial rhythm */
+header{padding:46px 24px 44px}
+header .eyebrow{color:#8f8f8f}
+header h1{max-width:330px;font-size:42px;line-height:.94;letter-spacing:-2.7px}
+.hero{margin-top:-22px;border-radius:18px;padding:22px}
+.hero h2{font-size:40px;letter-spacing:-2.2px}
+.hero .eyebrow{color:#ffd0d2}
+.heroBottom button{background:#fff;color:#111;border:0;padding:9px 12px;border-radius:3px;font-weight:800}
+main{padding-top:25px}
+.sectionhead{margin-top:28px;margin-bottom:11px}
+.sectionhead h2{font-size:20px;letter-spacing:-.8px}
+.sectionhead button{color:#8e151a}
+.session{padding:15px 14px}
+.session .time{font-size:20px;letter-spacing:-.7px}
+.metrics div{padding:17px 13px}
+.metrics b{font-size:27px}
+.metrics small{font-size:8px;letter-spacing:.15px}
+.shiftCard{padding:17px 15px}
+.shiftCard h3{letter-spacing:-.45px}
+.managerHeader{padding-bottom:34px}
+.managerStats>div{padding:18px 15px}
+.managerStats b{font-size:30px}
+.managerAction{border-left:4px solid #d71920}
+.managerAction .eyebrow{color:#b7b7b7}
+.managerAction .primary{background:#d71920}
+nav,.managerNav{box-shadow:0 -1px 0 #dedbd6}
+nav button,.managerNav button{font-size:8px;letter-spacing:.1px}
+nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
+.loginPage .brandMark{font-size:0;letter-spacing:0}
+.loginPage .brandMark:before{content:"MY";font-size:31px;letter-spacing:-2px;color:#fff}
+.loginPage .brandMark:after{content:" / TEAM";font-size:31px;letter-spacing:-2px;color:#d71920;font-weight:300}
+.loginPage .eyebrow{color:#777}
+.loginPage h1{font-size:50px;line-height:.94}
+@media(max-width:360px){header h1{font-size:37px}.loginPage h1{font-size:43px}.hero h2{font-size:36px}}
