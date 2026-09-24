@@ -91,3 +91,39 @@ header h1{font-weight:650;letter-spacing:-2.1px}
 .coverButton,.notice,.managerHint,.sourceStep{border-radius:5px}
 .chart{border-radius:5px}
 @media(min-width:521px){.shell{border-radius:18px}nav,.managerNav{border-radius:0 0 18px 18px}}
+
+/* MyTeam brand direction v3 — red / black / white */
+:root{--myteam-red:#d71920;--myteam-red-dark:#b50f16;--myteam-red-soft:#f3dede;--paper:#f5f4f1;--card:#fff;--ink:#080808;--line:#dedbd6}
+body{background:#e4e2de}
+.shell{background:#f5f4f1}
+header{background:#080808;color:#fff}
+.icon i{background:#d71920}
+.hero{background:#d71920;color:#fff;border:0}
+.hero .pale{color:#ffd4d5}
+.hero .ring{background:transparent;border:2px solid #fff;color:#fff}
+.hero .ring span{color:#ffd7d8}
+.heroBottom{border-color:#ffffff40}
+.session,.shiftCard,.trackingCard,.metrics div,.managerStats>div,.studioGrid div,.profileCard,.workspaceSwitchButton,.roster,.compliance,.chart,.demand div,.selectTimes button,.applicants>button{background:#fff}
+.datebox b{color:#d71920}
+.pill.good{background:#eee;color:#333}.pill.strong{background:#111;color:#fff}.pill.warn{background:#f3dede;color:#a5141a}
+.metrics{background:#dedbd6}
+.metrics em{color:#8c171b}
+.primary{background:#d71920;color:#fff}
+.primary:hover{background:#b50f16}
+.shiftTabs .active{color:#d71920;border-bottom-color:#d71920}
+.bundle,.bundleMode{color:#a5141a}
+.selectTimes button.selected,.applicants>button.chosen{border-color:#d71920}
+.selectTimes button.selected i,.applicants>button.chosen>i{background:#d71920;border-color:#d71920;color:#fff}
+.successIcon{background:#d71920;color:#fff}
+.progress i{background:#d71920}
+.chart .actual{stroke:#d71920}
+.alert,.cutoff{background:#f7e6e6;border-color:#ecc2c4;color:#a5141a}
+.alert span,.cutoff span{color:#8c5b5d}
+.alert button{background:#d71920;color:#fff}
+.managerAction{background:#080808}
+.managerNav button.active,nav button.active{color:#d71920}
+.profileAvatar{background:#d71920;color:#fff}
+.sourceStep svg{color:#d71920}
+.brandMark:after{content:" / TEAM";color:#d71920}
+.loginPage input:focus{border-color:#d71920}
+.loginPage .primary{background:#d71920;color:#fff}
