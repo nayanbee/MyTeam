@@ -24,7 +24,7 @@ Connor:{TUE:{times:['12 PM'],studios:['Martin Place']},SAT:{times:['10 AM'],stud
 Steph:{TUE:{times:['12 PM'],studios:['Kings Cross','Martin Place']},SAT:{times:['8 AM','9 AM','10 AM'],studios:['Kings Cross']}},
 Charlie:{TUE:{times:['11 AM','12 PM'],studios:['All Sydney']},SAT:{times:['8 AM','9 AM'],studios:['All Sydney']}}
 };
-const normaliseCoverTime=(t:string)=>t.replace(':00','').replace(/^0/,'');
+const normaliseCoverTime=(t:string)=>t.replace(/:00(?=\\s)/,'').replace(/^0/,'');
 const coverDay=(date:string)=>date.split(' · ')[0].slice(0,3).toUpperCase();
 const seedApplications:CoverRequest[]=[
 {id:'p1',shiftId:'a',instructor:'Nayan',coverage:['8:00 AM','9:00 AM','10:00 AM'],status:'PENDING',createdAt:'24 Sep'},
