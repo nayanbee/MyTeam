@@ -240,3 +240,50 @@ The first integration milestone is passed when:
 Automated feedback can ship later if Gate 3 contact access is delayed.
 
 After audit, replace every ⚪ with 🟢/🟡/🔴 and document exact endpoint/field/provenance.
+
+
+## V2 outbound write-back contract
+
+MyTeam should be implemented as read-first in V1 but write-capable at the integration boundary. Mariana Tek remains the source of truth.
+
+### Cover assignment target flow
+
+1. Management approves a cover per individual MyTeam class session.
+2. Resolve the stored Mariana class-session external ID through `external_identity_maps`.
+3. Create an idempotent `outbound_sync_commands` record for the desired instructor assignment.
+4. Re-read/compare the provider state before mutation. If it no longer matches the expected source state, stop with `conflict`; do not overwrite an external change.
+5. If the connected Mariana tenant exposes an authorised instructor-assignment mutation, send it.
+6. Persist the provider response and re-read/reconcile the class session.
+7. Mark the MyTeam cover decision `synced` only after observed Mariana state matches the approved assignment.
+8. Inbound sync/webhook reconciliation continues after success so later external changes are detected.
+
+### UI states
+
+- Confirmed in MyTeam · Mariana Tek update pending
+- Updating Mariana Tek
+- Live schedule updated
+- Sync failed · management action required
+- Mariana Tek changed externally · review required
+
+V1 uses the first/manual state and never pretends a write occurred.
+
+### Capability gating
+
+Do not infer write capability from API-key authentication alone. During sandbox audit record provider capabilities on `integration_connections.capabilities`, including:
+- class-session read
+- instructor read
+- class-session instructor assignment write
+- mutation idempotency support
+- source version / updated-at support
+- relevant webhook coverage
+
+The write worker must remain disabled unless the exact mutation is confirmed and authorised for that organisation.
+
+### Safety and consistency
+
+- One outbound command per individual class-session assignment, even when MyTeam presents a bundle.
+- Use idempotency keys to prevent duplicate provider writes.
+- Store expected source state before mutation to avoid clobbering changes made directly in Mariana.
+- Retry transient failures with bounded backoff; do not retry validation/permission conflicts indefinitely.
+- Keep a complete audit trail of actor, approved assignment, attempted provider mutation, response, reconciliation and any manual resolution.
+- Never place provider credentials or raw secrets in the repository/database rows; store only secret references.
