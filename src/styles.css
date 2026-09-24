@@ -305,3 +305,5 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 /* Make manager cover intelligence impossible to miss */
 .coverDecisionTools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0 6px}.coverDecisionTools button{border:0;border-radius:16px;background:#080808;color:#fff;padding:17px;text-align:left;display:grid;grid-template-columns:1fr 20px;align-items:center}.coverDecisionTools button:first-child{background:#d71920}.coverDecisionTools b,.coverDecisionTools span{display:block;grid-column:1}.coverDecisionTools b{font-size:14px}.coverDecisionTools span{font-size:9px;line-height:1.4;opacity:.7;margin-top:4px}.coverDecisionTools svg{grid-column:2;grid-row:1/3}.coverMatrixBlock{margin-top:10px}.managerNav{z-index:20}
 @media(max-width:720px){.coverDecisionTools{grid-template-columns:1fr}.shiftTabs.four{grid-template-columns:repeat(2,1fr)}}
+
+.matrixSource{padding:11px 12px 8px}.matrixSource b,.matrixSource span{display:block}.matrixSource b{font-size:11px;color:#fff}.matrixSource span{font-size:9px;color:#999;margin-top:3px}.coverSuggestions,.coverMatrix{margin-bottom:14px}.coverMatrixBlock{display:block!important}
