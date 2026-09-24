@@ -222,3 +222,8 @@ nav button.active svg,.managerNav button.active svg{stroke-width:2.5}
 .ackButton{width:100%;margin-top:10px;padding:14px;border:1px solid #111;border-radius:14px;background:#fff;font-weight:800;display:flex;justify-content:center;align-items:center;gap:7px}
 .messageAcknowledged{margin-top:14px;padding:13px;border-radius:14px;background:#f1f1ee;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800}
 .inboxMeta>b{font-size:9px;letter-spacing:.06em;margin-left:auto;color:#d71920}
+
+.directAssign{margin:18px 0;padding:16px;border:1px solid rgba(0,0,0,.09);border-radius:18px;background:#fafaf8}
+.directAssign .sectionhead{margin:0 0 10px;padding:0}
+.directAssign select{width:100%;padding:13px 14px;border:1px solid #d8d6d2;border-radius:12px;background:#fff;font:inherit}
+.directAssign>p{margin:9px 2px 0;font-size:11px;line-height:1.35;color:#777}
