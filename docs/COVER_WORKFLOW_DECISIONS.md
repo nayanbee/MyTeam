@@ -25,6 +25,7 @@
 - That mark is provisional. One hour later, My Team reads the source assignment for **every covered class**. If each selected instructor matches, mark the cover verified/closed. If any assignment is missing or different, alert the manager and leave the cover open for reconciliation.
 - Record the manager's mark time, the one-hour check, the observed source assignment, alert state, and final closure. A later edit or withdrawal reopens reconciliation.
 - Read-only Mariana Tek assignment access and a durable scheduled job are dependencies. Until they exist, show verification as unavailable rather than claiming the source was checked.
+- **Return when the Mariana Tek sandbox arrives:** detect subs assigned directly in Mariana Tek, even when no MyTeam request exists. Pause further invitations for that class and show the source assignment against the MyTeam decision in an assigned-manager review task. Only after the manager confirms should MyTeam settle the class, close outstanding invitations/applications, notify affected people and record the source assignment and reviewer. A mismatch stays actionable; later source edits reopen review. Track the sandbox implementation and acceptance scenarios in GitHub issue #1.
 
 ## Acceptance paths to test
 1. Instructor posts normal and urgent cover; manager receives them in one decision flow.
