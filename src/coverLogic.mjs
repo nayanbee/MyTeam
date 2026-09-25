@@ -1,35 +1,62 @@
-// One cover request is one offer. Bundle invitations must cover every class.
+// Each class has its own two-person invitation race. The caller must persist
+// transitions atomically when a shared backend is connected.
+export const classWinner = (records, shiftId, classTime) => records.find(r =>
+  r.shiftId === shiftId && r.status === 'APPROVED' && r.coverage.includes(classTime));
+export const activeInvitations = (records, shiftId, classTime) => records.filter(r =>
+  r.shiftId === shiftId && r.source === 'REQUESTED' && r.status === 'REQUESTED' && r.coverage.includes(classTime));
+
 export function sendInvitations(records, shiftId, names, coverageByName, classes) {
-  const forShift = records.filter(r => r.shiftId === shiftId);
-  if (forShift.some(r => r.status === 'APPROVED')) return records;
-  const active = forShift.filter(r => r.source === 'REQUESTED' && r.status === 'REQUESTED').length;
-  const remaining = Math.max(0, 2 - active);
-  const newNames = [...new Set(names)].filter(name =>
-    !forShift.some(r => r.instructor === name) &&
-    classes.every(t => (coverageByName[name] || []).includes(t))
-  ).slice(0, remaining);
-  return [...records, ...newNames.map((name, i) => ({
-    id: `req-${shiftId}-${name}-${Date.now()}-${i}`, shiftId, instructor: name,
-    coverage: [...classes], status: 'REQUESTED', createdAt: 'Now', source: 'REQUESTED'
-  }))];
+  const next = [...records];
+  for (const name of [...new Set(names)]) {
+    for (const classTime of (coverageByName[name] || []).filter(t => classes.includes(t))) {
+      if (classWinner(next, shiftId, classTime) || activeInvitations(next, shiftId, classTime).length >= 2) continue;
+      if (next.some(r => r.shiftId === shiftId && r.instructor === name && r.coverage.includes(classTime))) continue;
+      next.push({ id: `req-${shiftId}-${name}-${classTime}-${Date.now()}`, shiftId, instructor: name,
+        coverage: [classTime], status: 'REQUESTED', createdAt: 'Now', source: 'REQUESTED' });
+    }
+  }
+  return next;
 }
 
-export function answerInvitation(records, shiftId, instructor, accept) {
-  const active = records.find(r => r.shiftId === shiftId && r.instructor === instructor && r.source === 'REQUESTED' && r.status === 'REQUESTED');
-  if (!active || records.some(r => r.shiftId === shiftId && r.status === 'APPROVED')) return { records, outcome: 'NO_CHANGE', others: [] };
-  if (!accept) return { records: records.map(r => r.id === active.id ? { ...r, status: 'DECLINED' } : r), outcome: 'DECLINED', others: [] };
-  const others = records.filter(r => r.shiftId === shiftId && r.source === 'REQUESTED' && r.status === 'REQUESTED' && r.id !== active.id);
+export function answerInvitation(records, shiftId, instructor, accept, classTime) {
+  const active = records.find(r => r.shiftId === shiftId && r.instructor === instructor &&
+    r.source === 'REQUESTED' && r.status === 'REQUESTED' && (!classTime || r.coverage.includes(classTime)));
+  if (!active) return { records, outcome: 'NO_CHANGE', others: [], classTime: undefined };
+  const time = active.coverage[0];
+  if (classWinner(records, shiftId, time)) return { records, outcome: 'NO_CHANGE', others: [], classTime: time };
+  if (!accept) return { records: records.map(r => r.id === active.id ? { ...r, status: 'DECLINED' } : r), outcome: 'DECLINED', others: [], classTime: time };
+  const others = activeInvitations(records, shiftId, time).filter(r => r.id !== active.id);
+  const closed = new Set(others.map(r => r.id));
   return {
-    records: records.map(r => r.id === active.id ? { ...r, status: 'APPROVED', syncStatus: 'MARIANA_PENDING' } : others.some(o => o.id === r.id) ? { ...r, status: 'NOT SELECTED' } : r),
-    outcome: 'WON', others: others.map(r => r.instructor)
+    records: records.map(r => r.id === active.id ? { ...r, status: 'APPROVED', syncStatus: 'MARIANA_PENDING' }
+      : closed.has(r.id) ? { ...r, status: 'NOT SELECTED' }
+      : r.shiftId === shiftId && r.source !== 'REQUESTED' && r.status === 'PENDING' && r.coverage.includes(time)
+        ? { ...r, coverage: r.coverage.length === 1 ? r.coverage : r.coverage.filter(t => t !== time), status: r.coverage.length === 1 ? 'NOT SELECTED' : 'PENDING' }
+        : r),
+    outcome: 'WON', others: others.map(r => r.instructor), classTime: time
   };
 }
 
 export function approveApplications(records, shiftId, assignments) {
-  const forShift = records.filter(r => r.shiftId === shiftId);
-  if (forShift.some(r => r.status === 'APPROVED')) return { records, outcome: 'NO_CHANGE' };
-  const names = new Set(Object.values(assignments));
-  const selected = forShift.filter(r => r.source !== 'REQUESTED' && r.status === 'PENDING' && names.has(r.instructor));
-  if (selected.length !== names.size || !names.size) return { records, outcome: 'NO_CHANGE' };
-  return { records: records.map(r => r.shiftId !== shiftId || (r.status !== 'PENDING' && r.status !== 'REQUESTED') ? r : { ...r, status: names.has(r.instructor) ? 'APPROVED' : 'NOT SELECTED', ...(names.has(r.instructor) ? { syncStatus: 'MARIANA_PENDING' } : {}) }), outcome: 'APPROVED' };
+  const times = Object.keys(assignments).filter(t => assignments[t]);
+  if (!times.length || times.some(t => classWinner(records, shiftId, t))) return { records, outcome: 'NO_CHANGE' };
+  if (times.some(t => !records.some(r => r.shiftId === shiftId && r.source !== 'REQUESTED' &&
+    r.status === 'PENDING' && r.instructor === assignments[t] && r.coverage.includes(t)))) return { records, outcome: 'NO_CHANGE' };
+  const affected = new Set(times);
+  const next = records.map(r => {
+    if (r.shiftId !== shiftId || !['PENDING','REQUESTED'].includes(r.status)) return r;
+    if (r.source === 'REQUESTED') return r.coverage.some(t => affected.has(t)) ? { ...r, status: 'NOT SELECTED' } : r;
+    const remaining = r.coverage.filter(t => !affected.has(t));
+    return { ...r, coverage: remaining.length ? remaining : r.coverage, status: remaining.length ? 'PENDING' : times.some(t => assignments[t] === r.instructor && r.coverage.includes(t)) ? 'SUPERSEDED' : 'NOT SELECTED' };
+  });
+  for (const time of times) next.push({ id: `approved-${shiftId}-${time}-${Date.now()}`, shiftId,
+    instructor: assignments[time], coverage: [time], source: 'APPLIED', status: 'APPROVED', syncStatus: 'MARIANA_PENDING', createdAt: 'Now' });
+  return { records: next, outcome: 'APPROVED' };
+}
+
+export function withdrawApplication(records, shiftId, instructor) {
+  const selected = records.filter(r => r.shiftId === shiftId && r.instructor === instructor && ['PENDING','APPROVED'].includes(r.status));
+  if (!selected.length) return { records, outcome: 'NO_CHANGE', reopened: [] };
+  const reopened = selected.filter(r => r.status === 'APPROVED').flatMap(r => r.coverage);
+  return { records: records.map(r => selected.some(x => x.id === r.id) ? { ...r, status: 'WITHDRAWN' } : r), outcome: 'WITHDRAWN', reopened };
 }
