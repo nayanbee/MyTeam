@@ -31,7 +31,7 @@ export function answerInvitation(records, shiftId, instructor, accept, classTime
     records: records.map(r => r.id === active.id ? { ...r, status: 'APPROVED', syncStatus: 'MARIANA_PENDING' }
       : closed.has(r.id) ? { ...r, status: 'NOT SELECTED' }
       : r.shiftId === shiftId && r.source !== 'REQUESTED' && r.status === 'PENDING' && r.coverage.includes(time)
-        ? { ...r, coverage: r.coverage.filter(t => t !== time), status: r.coverage.length === 1 ? 'NOT SELECTED' : 'PENDING' }
+        ? { ...r, coverage: r.coverage.length === 1 ? r.coverage : r.coverage.filter(t => t !== time), status: r.coverage.length === 1 ? 'NOT SELECTED' : 'PENDING' }
         : r),
     outcome: 'WON', others: others.map(r => r.instructor), classTime: time
   };
@@ -47,7 +47,7 @@ export function approveApplications(records, shiftId, assignments) {
     if (r.shiftId !== shiftId || !['PENDING','REQUESTED'].includes(r.status)) return r;
     if (r.source === 'REQUESTED') return r.coverage.some(t => affected.has(t)) ? { ...r, status: 'NOT SELECTED' } : r;
     const remaining = r.coverage.filter(t => !affected.has(t));
-    return { ...r, coverage: remaining, status: remaining.length ? 'PENDING' : 'NOT SELECTED' };
+    return { ...r, coverage: remaining.length ? remaining : r.coverage, status: remaining.length ? 'PENDING' : times.some(t => assignments[t] === r.instructor && r.coverage.includes(t)) ? 'SUPERSEDED' : 'NOT SELECTED' };
   });
   for (const time of times) next.push({ id: `approved-${shiftId}-${time}-${Date.now()}`, shiftId,
     instructor: assignments[time], coverage: [time], source: 'APPLIED', status: 'APPROVED', syncStatus: 'MARIANA_PENDING', createdAt: 'Now' });
