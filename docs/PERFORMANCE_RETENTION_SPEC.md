@@ -353,3 +353,31 @@ MyTeam should answer three questions quickly:
 3. **Did the clients come back, and where did they go?**
 
 This specification is the V1 baseline. Changes to definitions should be explicit and versioned.
+
+
+## Feedback expansion — studio + instructor + studio workspace
+
+Feedback must support two distinct subjects rather than treating all feedback as instructor performance.
+
+### Feedback subjects
+1. **Studio feedback** — facilities, cleanliness, amenities, front desk/service, equipment, temperature/environment, arrival experience and other location-level issues.
+2. **Instructor feedback** — class experience and instructor-specific feedback, using the existing configurable score/comment model.
+
+A single post-class feedback journey may collect both, but responses must be stored and permissioned as separate subject types so studio feedback does not contaminate instructor performance metrics.
+
+### Studio login / workspace
+Add a dedicated **Studio** role/workspace for authorised studio-level staff. This is separate from Instructor and Management access.
+
+Studio users should be able to:
+- view feedback about their authorised studio(s);
+- triage/respond internally to studio feedback;
+- see themes and trends over time;
+- acknowledge/resolve operational issues;
+- see instructor feedback only where organisation permissions explicitly allow it.
+
+Studio users must not automatically receive organisation-wide management analytics or unrestricted instructor performance data.
+
+### Data-model implication
+Feedback records need a polymorphic subject such as `subject_type = studio | instructor` plus `subject_id`, class-session context, visibility state, acknowledgement/resolution state and role-based access rules. Organisation settings control which feedback is visible to instructors, studio users and management.
+
+This is a locked requirement for the Feedback build; implementation can wait until the Performance/Covers work is complete.
