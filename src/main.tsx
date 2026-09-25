@@ -43,7 +43,8 @@ const teachingRoster:{name:string,day:string,studio:string,start:string,brand:st
 {name:'George',day:'SAT',studio:'Surry Hills',start:'9:00 AM',brand:"Barry’s"},
 {name:'Charlie',day:'SAT',studio:'Kings Cross',start:'8:00 AM',brand:"Barry’s"},
 {name:'Connor',day:'TUE',studio:'Martin Place',start:'12:00 PM',brand:"Barry’s"},
-// Other-brand shifts are entered privately by the instructor in Profile.];
+// Other-brand shifts are entered privately by the instructor in Profile.
+];
 const coverConflict=(name:string,day:string,studio:string,time:string,externalShifts:ExternalShift[]=[])=>findConflict([...teachingRoster,...externalShifts],name,day,studio,time);
 const viableCoverage=(name:string,x:any,times:string[],externalShifts:ExternalShift[]=[])=>times.filter(t=>!coverConflict(name,coverDay(x.date),x.studio,t,externalShifts));
 const coverStudios=['Kings Cross','Surry Hills','Martin Place'];
