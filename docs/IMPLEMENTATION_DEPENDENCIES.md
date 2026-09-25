@@ -2,6 +2,8 @@
 
 The preview persists sample cover, availability, compliance and notification state in localStorage on one device. This is for review, not a multi-user system.
 
+An optional shared Covers screen and authenticated API are scaffolded in `api/`, `src/sharedApp.tsx` and `db/003_shared_cover_api.sql`. They are inactive until Supabase Auth users, manager assignments, schema and Vercel environment variables are configured. Follow `SHARED_COVER_SETUP.md` before testing with two devices. The existing preview remains browser-local when the API returns the explicit unconfigured response.
+
 ## Required to make cover decisions durable
 - Authenticated person and organisation memberships, with assigned-manager mapping.
 - PostgreSQL (starter migrations `001_initial_schema.sql`, `002_cover_workflows.sql`).
