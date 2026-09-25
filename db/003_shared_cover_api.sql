@@ -7,6 +7,8 @@ CREATE TABLE owner_manager_assignments (
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 ALTER TABLE cover_requests ADD COLUMN IF NOT EXISTS external_key text;
+ALTER TABLE cover_requests ADD COLUMN IF NOT EXISTS studio_name text;
+ALTER TABLE cover_requests ADD COLUMN IF NOT EXISTS class_type text;
 ALTER TABLE cover_classes ADD COLUMN IF NOT EXISTS label text;
 CREATE TABLE cover_notifications (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -37,7 +39,7 @@ BEGIN
        ELSE '[]'::jsonb END,
     'requests',(SELECT COALESCE(jsonb_agg(jsonb_build_object(
        'id',r.id,'status',r.status,'ownerId',r.owner_id,'owner',o.preferred_name,
-       'managerId',r.assigned_manager_id,'note',r.note,'urgent',r.urgent,'createdAt',r.created_at,
+       'managerId',r.assigned_manager_id,'studio',r.studio_name,'classType',r.class_type,'note',r.note,'urgent',r.urgent,'createdAt',r.created_at,
        'classes',(SELECT COALESCE(jsonb_agg(jsonb_build_object('id',c.id,'time',c.starts_at,'label',c.label,
           'status',c.status,'sourceStatus',c.source_status,'assignedId',c.assigned_instructor_id,
           'assigned',(SELECT preferred_name FROM people WHERE id=c.assigned_instructor_id)) ORDER BY c.starts_at),'[]'::jsonb)
@@ -77,9 +79,10 @@ BEGIN
     SELECT manager_id INTO owner_manager FROM owner_manager_assignments WHERE owner_id=me.id;
     IF owner_manager IS NULL OR NOT EXISTS(SELECT 1 FROM organisation_memberships m WHERE m.person_id=owner_manager AND m.organisation_id=membership.organisation_id AND m.status='active' AND 'manager'=ANY(m.roles)) OR jsonb_array_length(COALESCE(p->'classes','[]'::jsonb)) NOT BETWEEN 1 AND 3 THEN
       RAISE EXCEPTION 'Assigned manager and 1–3 classes required'; END IF;
-    IF length(COALESCE(p->>'note',''))>1000 THEN RAISE EXCEPTION 'Note too long'; END IF;
-    INSERT INTO cover_requests(organisation_id,owner_id,assigned_manager_id,status,urgent,note)
-      VALUES(membership.organisation_id,me.id,owner_manager,'open',COALESCE((p->>'urgent')::boolean,false),p->>'note') RETURNING * INTO r;
+    IF length(COALESCE(p->>'note',''))>1000 OR length(COALESCE(p->>'studio',''))>120 OR length(COALESCE(p->>'classType',''))>120 OR
+       COALESCE(p->>'studio','')='' OR COALESCE(p->>'classType','')='' THEN RAISE EXCEPTION 'Studio, class type and a short note are required'; END IF;
+    INSERT INTO cover_requests(organisation_id,owner_id,assigned_manager_id,status,urgent,note,studio_name,class_type)
+      VALUES(membership.organisation_id,me.id,owner_manager,'open',COALESCE((p->>'urgent')::boolean,false),p->>'note',p->>'studio',p->>'classType') RETURNING * INTO r;
     FOR entry IN SELECT * FROM jsonb_array_elements(p->'classes') LOOP
       IF (entry->>'time')::timestamptz <= now() THEN RAISE EXCEPTION 'Class must be in the future'; END IF;
       INSERT INTO cover_classes(cover_request_id,starts_at,label,status)
