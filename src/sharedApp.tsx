@@ -15,10 +15,11 @@ const post=(url:string,body:object)=>endpoint(url,{method:'POST',headers:{'Conte
 const when=(time:string)=>new Date(time).toLocaleString('en-AU',{timeZone:'Australia/Sydney',weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
 
 export default function SharedGate({demo}:{demo:React.ReactNode}){
-  const[mode,setMode]=useState<'loading'|'demo'|'login'|'shared'|'unavailable'>('loading');
+  const[mode,setMode]=useState<'loading'|'demo'|'login'|'invite'|'shared'|'unavailable'>('loading');
+  const[invite,setInvite]=useState<{accessToken:string,refreshToken:string}|null>(null);
   const[snapshot,setSnapshot]=useState<Snapshot|null>(null);
   const[error,setError]=useState('');
-  useEffect(()=>{let active=true;fetch('/api/auth',{credentials:'same-origin'}).then(async r=>{
+  useEffect(()=>{const fragment=new URLSearchParams(window.location.hash.slice(1));if(fragment.get('type')==='invite'&&fragment.get('access_token')&&fragment.get('refresh_token')){setInvite({accessToken:fragment.get('access_token')!,refreshToken:fragment.get('refresh_token')!});window.history.replaceState(null,'',window.location.pathname+window.location.search);setMode('invite');return}let active=true;fetch('/api/auth',{credentials:'same-origin'}).then(async r=>{
     if(!active)return;
     if(r.status===503 && (await r.clone().json().catch(()=>({}))).error==='Shared workspace is not configured yet'){setMode('demo');return}
     if(!r.headers.get('content-type')?.includes('application/json')){setMode('demo');return}
@@ -31,9 +32,15 @@ export default function SharedGate({demo}:{demo:React.ReactNode}){
   if(mode==='loading')return <div className="sharedShell"><p>Loading MyTeam…</p></div>;
   if(mode==='demo')return <>{demo}</>;
   if(mode==='unavailable')return <main className="sharedShell"><h1>Shared covers are temporarily unavailable</h1><p>We could not reach the cover service. Try reloading in a moment.</p><button onClick={()=>window.location.reload()}>Retry</button></main>;
+  if(mode==='invite'&&invite)return <InviteSetup invite={invite} onComplete={data=>{setSnapshot(data);setInvite(null);setMode('shared')}}/>;
   if(mode==='login')return <SharedLogin onLogin={data=>{setSnapshot(data);setMode('shared');setError('')}}/>;
   if(!snapshot)return null;
   return <SharedCovers data={snapshot} error={error} run={async payload=>{try{setError('');await post('/api/cover',payload);await refresh();return true}catch(e:any){setError(e.message);return false}}} logout={async()=>{await endpoint('/api/auth',{method:'DELETE'});setSnapshot(null);setMode('login')}}/>;
+}
+
+function InviteSetup({invite,onComplete}:{invite:{accessToken:string,refreshToken:string},onComplete:(data:Snapshot)=>void}){
+  const[password,setPassword]=useState('');const[confirm,setConfirm]=useState('');const[error,setError]=useState('');const[busy,setBusy]=useState(false);
+  return <main className="sharedShell sharedLogin"><div className="sharedBrand">MY<span>/TEAM</span></div><div className="sharedCard"><span className="sharedEyebrow">WELCOME TO MYTEAM</span><h1>Set your password.</h1><p>Use at least 12 characters to activate your invited account.</p><form onSubmit={async e=>{e.preventDefault();if(password!==confirm){setError('Passwords do not match');return}setBusy(true);setError('');try{onComplete(await post('/api/auth',{action:'complete_invite',...invite,password}))}catch(e:any){setError(e.message)}finally{setBusy(false)}}}><label>Password<input type="password" autoComplete="new-password" minLength={12} required value={password} onChange={e=>setPassword(e.target.value)}/></label><label>Confirm password<input type="password" autoComplete="new-password" minLength={12} required value={confirm} onChange={e=>setConfirm(e.target.value)}/></label>{error&&<p role="alert" className="sharedError">{error}</p>}<button disabled={busy}>{busy?'Activating…':'Activate account'}</button></form></div></main>;
 }
 
 function SharedLogin({onLogin}:{onLogin:(data:Snapshot)=>void}){
