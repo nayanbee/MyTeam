@@ -58,7 +58,7 @@ BEGIN
        (('manager'=ANY(membership.roles) AND r.assigned_manager_id=me.id) OR r.owner_id=me.id OR ('instructor'=ANY(membership.roles) AND r.status='open') OR
         EXISTS (SELECT 1 FROM cover_classes c WHERE c.cover_request_id=r.id AND
           (c.assigned_instructor_id=me.id OR EXISTS (SELECT 1 FROM cover_invitations i WHERE i.cover_class_id=c.id AND i.instructor_id=me.id) OR
-           EXISTS (SELECT 1 FROM cover_applications a WHERE a.cover_class_id=c.id AND a.instructor_id=me.id)))))),
+           EXISTS (SELECT 1 FROM cover_applications a WHERE a.cover_class_id=c.id AND a.instructor_id=me.id))))),
     'notifications',(SELECT COALESCE(jsonb_agg(jsonb_build_object('id',n.id,'title',n.title,'body',n.body,'createdAt',n.created_at,'readAt',n.read_at)
       ORDER BY n.created_at DESC),'[]'::jsonb) FROM (SELECT * FROM cover_notifications WHERE person_id=me.id ORDER BY created_at DESC LIMIT 30) n)
   );
