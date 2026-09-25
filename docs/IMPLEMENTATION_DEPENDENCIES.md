@@ -12,5 +12,6 @@ The preview persists sample cover, availability, compliance and notification sta
 ## External sources
 - Obtain instructor authorization and integration credentials before importing another brand's schedule. Manual shifts entered by the instructor are a temporary fallback; do not expose the employer or location to managers.
 - Obtain Mariana Tek read-only assignment access. The manager's “I updated Mariana Tek” mark must store the time and schedule an actual source check one hour later. Match every class, or keep its reconciliation task open and alert the assigned manager.
+- When Mariana Tek sandbox access is available, implement detection of subs made directly in Mariana Tek and assigned-manager review before settling MyTeam cover state. See `COVER_WORKFLOW_DECISIONS.md` §4 and GitHub issue #1. Do not show this sandbox dependency as a manager-facing workflow until source detection works.
 
 Do not describe browser-local state or a manager mark as verified source truth.
